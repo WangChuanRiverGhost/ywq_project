@@ -1,38 +1,5 @@
 # 周一：变量、数据类型、条件与循环
 
-"""
-一、变量
-    本质是通过一个名称指向内存中被创建或已存在的数据，方便对其进行操作；
-    变量在同一时间只能指向一个数据，多个变量可以指向同一数据。
-    如：
-        a = 111   同时在内存中创建a变量和111数据，并将a指向111
-        b = a     在内存中创建b变量，并将其指向a变量指向的数据；此时a与b都指向111
-        a = 222   在内存中创建222数据，并将a的指向改为222；此时a指向222，b指向111
-二、数据类型
-    指在python语言中可以被直接处理的数据类型。
-    整数、浮点数、字符串、布尔值、空值
-三、条件判断
-    通过对不同条件的判断对数据做出不同的操作。
-    if-elif-else
-四、循环
-    -for循环
-        对有序的数据进行遍历。
-        for-in
-        range(a,b,c)函数：本质是创建一个range对象，当其被使用时，返回一个间隔为c，包含a，不包含b的整数列表；当a和c没有被赋值时，默认为0。
-    -while循环
-        符合条件时，不断进行while中的操作。
-    -else子句
-        for循环中，else将在for循环结束后执行；
-        while循环中，else将在while后条件为False后执行；
-        当循环中存在break时，优先执行break，即break的优先级高于else。
-    -循环操作
-        break：跳出最近一层循环；
-        continue：终止本次循环，继续下一次循环；
-        pass：占位符
-五、match：对同一变量的不同值进行处理
-    match-case
-"""
-
 # 练习一：数据类型与类型转换
 name,age,height,is_student = "小明",18,1.75,True
 student = [name,age,height,is_student]
@@ -57,7 +24,7 @@ print("————————————")
 score = int(input("请输入分数："))
 if score >= 90:
     level = "A"
-elif 60 <= score <= 89:
+elif 60 <= score:
     level = "B"
 elif score <=59:
     level = "C"
