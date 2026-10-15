@@ -1,0 +1,21 @@
+## ② .gitignore（仓库根目录）
+
+```gitignore
+# 虚拟环境（体积大，本地用即可，不提交）
+venv/
+.venv/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 数据库文件（运行时自动生成）
+*.db
+
+# 环境变量（含密钥，绝不提交）
+.env
+
+# 编辑器配置
+.vscode/
+.idea/
+```

@@ -89,6 +89,7 @@ print("————————")
 import random
 
 num = random.randint(1,100)
+print(num)
 input(
     """
 这是一个猜数字游戏。
