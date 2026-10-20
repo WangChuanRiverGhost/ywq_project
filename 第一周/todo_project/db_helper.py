@@ -4,8 +4,8 @@ DB_NAME = "todo.db"   # 库名
 DB_PATH = f"第一周/todo_project/{DB_NAME}"   # 数据库路径
 
 # 连接数据库，创建游标
-conn = sqlite3.connect(DB_PATH)
-cursor = conn.cursor()
+conn = None
+cursor = None
 
 def init_db():   # 初始化数据库，创建表
     global conn,cursor
@@ -39,6 +39,9 @@ def get_all_tasks():   # 获取所有任务
     cursor.execute("SELECT * FROM tasks")
     rows = cursor.fetchall()
 
+    if rows == []:
+        return False
+    
     return rows 
 
 def get_tasks_by_status(status):   # 按状态筛选任务
@@ -46,6 +49,9 @@ def get_tasks_by_status(status):   # 按状态筛选任务
     cursor.execute("SELECT id,title,cerated_at FROM tasks where status = ?",(status,))
     rows = cursor.fetchall()
 
+    if rows == []:
+        return False
+    
     return rows
 
 def complete_task(task_id):   # 标记任务完成
@@ -68,3 +74,12 @@ def close_db():   # 关闭数据库连接
 
     return True
 
+def check_error(i):   # 检测用户选择是否存在于数据库
+    rows = get_all_tasks()
+    for row in rows:
+        if i != row[0]:
+            continue
+        else:
+            return False
+    return True
+    
