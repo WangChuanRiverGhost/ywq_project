@@ -63,9 +63,6 @@ x = cursor.execute("SELECT title FROM books where price>50")
 print(list(x))
 cursor.execute("UPDATE books SET price=? WHERE title=?",(49.0,"Python入门"))
 cursor.execute("DELETE FROM books WHERE title=?",("SQLite指南",))
-rows = cursor.fetchall()
-for row in rows:
-    print(row)
 
 conn.commit()
 conn.close()
