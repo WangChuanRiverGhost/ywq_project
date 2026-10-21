@@ -87,55 +87,85 @@ def main():
                 continue
 
             for row in rows:
-                data_str = f"事项id：{row[0]} 事项内容：{row[1]} 事项状态：{row[2]}\n"
+                data_str = f"事项id：{row[0]} 事项内容：{row[1]} 事项状态：{row[2]} 创建时间：{row[3]}\n"
                 print(data_str)     
 
         elif choice == 4:   # 修改任务完成状态
-            done_id = input("请输入要修改状态事项的编号：")
 
-            """异常检测1：检测用户输入是否为数字"""
             try:
+                """异常检测5：检测库中是否有内容"""
+                if not get_all_tasks():
+                    raise MatterCheckError("库中没有内容，请添加后再删除")
+                
+                done_id = input("请输入要修改状态事项的编号：")
+                """异常检测1：检测用户输入是否为数字"""
                 done_id = int(done_id)
+                
                 """异常检测4：检测用户输入是否为已存在的事项"""
                 if check_error(done_id):
                     raise MatterCheckError("选择的事项不存在，请重新选择")
+            
             except ValueError:   # 异常处理1：处理用户输入非数字的情况
                 print("输入错误，请重新输入（输入需要为纯数字，不能包含字母、小数点或空格）")
                 continue
-            except MatterCheckError:   # 异常处理4：处理用户输入不存在事项的情况
-                print("选择的事项不存在，请重新选择")
+            
+            except MatterCheckError as e:   # 异常处理4&5：处理空库或用户输入不存在事项的情况
+                
+                if str(e) == "库中没有内容，请添加后再删除":
+                    print("库中没有内容，请添加后再删除")
+                
+                else:
+                    print("选择的事项不存在，请重新选择")
                 continue
+            
             if complete_task(done_id):
                 print("状态修改成功！请继续操作。")
                 continue
+            
             else:
                 print("状态修改失败，请重新操作")
                 continue
         
         elif choice == 5:   # 删除任务
-            del_id = input("请输入要删除事项的编号：")
 
-            """异常检测1：检测用户输入是否为已存在的事项"""
             try:
+
+                """异常检测5：检测库中是否有内容"""
+                if not get_all_tasks():
+                    raise MatterCheckError("库中没有内容，请添加后再删除")
+                
+                del_id = input("请输入要删除事项的编号：")
+                """异常检测1：检测用户输入是否为数字"""
                 del_id = int(del_id)
+                
                 """异常检测4：检测用户输入是否为已存在的事项"""
                 if check_error(del_id):
                     raise MatterCheckError("选择的事项不存在，请重新选择")
+            
             except ValueError:   # 异常处理1：处理用户输入非数字的情况
                 print("输入错误，请重新输入（输入需要为纯数字，不能包含字母、小数点或空格）")
                 continue
-            except MatterCheckError:   # 异常处理4：处理用户输入不存在事项的情况
-                print("选择的事项不存在，请重新选择")
+            
+            except MatterCheckError as e:   # 异常处理4&5：处理空库或用户输入不存在事项的情况
+                
+                if str(e) == "库中没有内容，请添加后再删除":
+                    print("库中没有内容，请添加后再删除")
+                
+                else:
+                    print("选择的事项不存在，请重新选择")
+                
                 continue
             
             if delete_task(del_id):
                 print("代办删除成功！请继续操作。")
                 continue
+            
             else:
                 print("代办删除失败，请重新操作")
                 continue
         
         else:   # 退出
+            close_db()
             break
 
 if __name__ == '__main__':

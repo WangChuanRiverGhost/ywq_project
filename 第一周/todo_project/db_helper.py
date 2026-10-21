@@ -19,7 +19,7 @@ def init_db():   # 初始化数据库，创建表
             id INTEGER PRIMARY KEY NOT NULL,
             title TEXT NOT NULL,
             status TEXT NOT NULL,
-            cerated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
 
@@ -39,14 +39,14 @@ def get_all_tasks():   # 获取所有任务
     cursor.execute("SELECT * FROM tasks")
     rows = cursor.fetchall()
 
-    if rows == []:
+    if not rows:
         return False
     
     return rows 
 
 def get_tasks_by_status(status):   # 按状态筛选任务
 
-    cursor.execute("SELECT id,title,cerated_at FROM tasks where status = ?",(status,))
+    cursor.execute("SELECT id,title,status,created_at FROM tasks where status = ?",(status,))
     rows = cursor.fetchall()
 
     if rows == []:
@@ -76,6 +76,7 @@ def close_db():   # 关闭数据库连接
 
 def check_error(i):   # 检测用户选择是否存在于数据库
     rows = get_all_tasks()
+    
     for row in rows:
         if i != row[0]:
             continue
