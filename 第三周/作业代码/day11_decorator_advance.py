@@ -38,5 +38,5 @@ def print_bye():
     print("bye")
 
 print_hello()
-add(1,2)    
+ddel(1,2)    
 print_bye()
