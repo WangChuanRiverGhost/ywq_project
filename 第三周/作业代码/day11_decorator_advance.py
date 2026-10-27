@@ -14,16 +14,16 @@ def print_hello():
     print("你好")
 
 def log(func):
-
     @functools.wraps(func)
-    def y(a,b):
-        num = func(a,b)
+    def y(*args):
+        print(f"函数名：{func.__name__}\函数参数：{inspect.signature(func)}")
+        num = func(*args)
         print(f"返回值：{num}")
     return y
+
 @log
-def add(a,b):
-    print(f"函数名：{add.__name__} 函数参数：{a},{b}")
-    return a + b
+def ddel(a,b):
+    return a - b
 
 def repeat(n):
     def z(func):
