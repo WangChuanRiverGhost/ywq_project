@@ -1,0 +1,26 @@
+ghost@ghost UCRT64 /d/实训/学习计划/第三周/作业代码/day13_测试仓库 (main)
+$ git init
+Initialized empty Git repository in D:/实训/学习计划/第三周/作业代码/day13_测试仓库/.git/
+
+ghost@ghost UCRT64 /d/实训/学习计划/第三周/作业代码/day13_测试仓库 (master)
+$ git add .
+
+ghost@ghost UCRT64 /d/实训/学习计划/第三周/作业代码/day13_测试仓库 (master)
+$ git commit -m "初始化"
+[master (root-commit) 30dbecb] 初始化
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ghost@ghost UCRT64 /d/实训/学习计划/第三周/作业代码/day13_测试仓库 (master)
+$ git log
+commit 30dbecbb2be2f01dc6b5e287f3f112d2327202d1 (HEAD -> master)
+Author: WanfChuanRiverGhost <ghost_abb@outlook.com>
+Date:   Wed Oct 28 17:33:49 2026 +0800
+
+    初始化
+
+ghost@ghost UCRT64 /d/实训/学习计划/第三周/作业代码/day13_测试仓库 (master)
+$ git diff
+
+git init:初始化git仓库
+git commit:提交更改到暂存区
+git log:查看更改日志
+git diff：查看更改细节
