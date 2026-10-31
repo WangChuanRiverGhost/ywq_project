@@ -1,4 +1,4 @@
-import time,functools
+import time,functools,inspect
 
 def timer(func):
     @functools.wraps(func)
