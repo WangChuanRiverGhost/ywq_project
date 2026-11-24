@@ -12,6 +12,7 @@ class UserCreate(UserBase):
 
 # 登录
 class UserLogin(UserBase):
+
     password: str
 
 # 存数据库

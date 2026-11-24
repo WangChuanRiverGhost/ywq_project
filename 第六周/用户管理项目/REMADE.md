@@ -27,6 +27,7 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```bash
 uvicorn main:app --reload
 ```
+访问/docs。
 
 ### 4. 打开接口文档
 浏览器访问 http://127.0.0.1:8000/docs 就能看到 Swagger 文档，所有接口都能在线测试。
@@ -58,3 +59,49 @@ uvicorn main:app --reload
 - `GET /todos/{todo_id}` — 查某一条待办
 - `PUT /todos/{todo_id}` — 修改某一条待办
 - `DELETE /todos/{todo_id}` — 删除某一条待办
+
+## 接口测试
+项目启动后，可通过 Swagger UI、Postman 或 Apifox 测试接口。推荐先用 /docs 确认接口定义，再用 Postman / Apifox 做完整流程测试。  
+### 1、启动服务
+```
+uvicorn main:app --reload
+```
+启动后访问：http://127.0.0.1:8000/docs
+### 2、用postman测试
+#### 步骤一：注册用户
+方法：POST  
+url：http://127.0.0.1:8000/users/users
+body：
+```
+{
+  "username": "aaa",
+  "password": "12345678",
+  "email": "aaa@outlook.com"
+}
+```
+预期响应：200 OK
+用户名重复/密码长度不符合要求：400 Bad Request
+#### 步骤二：登录并获取token
+方法：POST  
+url：http://127.0.0.1:8000/users/users/login
+body：
+```
+{
+  "username": "aaa",
+  "password": "12345678"
+}
+```
+预期响应：200 OK
+用户名不存在/密码错误：401 Unauthorized
+#### 步骤三：用token访问接口
+方法：GET
+url：http://127.0.0.1:8000/users/my-account
+body：
+```
+{
+  "user_id": 1
+}
+```
+预期响应：200 OK
+## 未来计划
+下周切换 MySQL、加爬虫模块、加部署

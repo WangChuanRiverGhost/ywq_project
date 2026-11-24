@@ -55,8 +55,7 @@ def create_user(user: UserCreate):
     else:
         raise LengthPasswordError(status_code=400,detail="密码长度不符合要求,需要大于7位并小于16位")
     # 用户密码加密
-    hashed = hashlib.sha256(user.password.encode()).hexdigest()
-    # 设置用户id
+    hashed = pwd_context.hash(user.password)
     new_id = len(users_db)+1
     # 存入用户信息
     user_in_db = {
@@ -71,9 +70,10 @@ def create_user(user: UserCreate):
 
 @router.post("/users/login")
 def login_user(user: UserLogin):
+
     # 查找用户名
     found = next((u for u in users_db if u["username"] == user.username), None)
-    
+
     # 验证是否存在该用户
     if not found:
         raise HTTPException(status_code=401, detail="用户名或密码错误")
@@ -82,7 +82,7 @@ def login_user(user: UserLogin):
     if not pwd_context.verify(user.password, found["hashed_password"]):
         raise HTTPException(status_code=401, detail="用户名或密码错误")
     
-    token = create_access_token(user.id)
+    token = create_access_token(found["id"])
     # 返回token
     return {"message": "登录成功", "username": user.username,"access_token": token, "token_type": "bearer"}
 
