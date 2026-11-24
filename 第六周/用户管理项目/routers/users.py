@@ -1,11 +1,44 @@
 from hmac import new
-from fastapi import APIRouter
-from fastapi import HTTPException
-import hashlib
+from datetime import datetime, timedelta, timezone
+from fastapi import APIRouter,HTTPException,Depends, Header
+from passlib.context import CryptContext
+import hashlib,jwt
+
 from schemas.user import UserBase,UserCreate, UserLogin
 
 class LengthPasswordError(HTTPException):
     pass
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+SECRET_KEY = "your-secret-key-keep-it-safe"   # 配置密钥
+ALGORITHM = "HS256" # 配置算法
+# 创建JWT
+def create_access_token(user_id: int, expires_minutes: int = 30) -> str: # 生成JWT
+    payload = {
+        "sub": str(user_id), # 用户ID
+        "exp": datetime.now(timezone.utc) + timedelta(minutes=expires_minutes), # 过期时间
+        "iat": datetime.now(timezone.utc), # 签发时间（可选）
+    }
+    token = jwt.encode(payload, SECRET_KEY,algorithm=ALGORITHM)
+
+    return token
+# 验证JWT是否为期望值
+def decode_token(token: str) -> dict:
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="token 已过期")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="token 无效")
+# 检查客户端是否传入token，是则进行校验，校验通过则返回用户id
+def get_current_user(authorization: str = Header(None)) -> int: # 如果没有返回异常则返回用户id
+    if not authorization or not authorization.startswith("Bearer "): # 检查客户端是否传入token
+        raise HTTPException(status_code=401, detail="缺少 token")
+    token = authorization.removeprefix("Bearer ")
+    payload = decode_token(token)
+    return int(payload["sub"])
 
 router = APIRouter(prefix="/users", tags=["用户"])
 
@@ -38,4 +71,21 @@ def create_user(user: UserCreate):
 
 @router.post("/users/login")
 def login_user(user: UserLogin):
-    pass
+    # 查找用户名
+    found = next((u for u in users_db if u["username"] == user.username), None)
+    
+    # 验证是否存在该用户
+    if not found:
+        raise HTTPException(status_code=401, detail="用户名或密码错误")
+
+    # 验证密码是否和加密后相同
+    if not pwd_context.verify(user.password, found["hashed_password"]):
+        raise HTTPException(status_code=401, detail="用户名或密码错误")
+    
+    token = create_access_token(user.id)
+    # 返回token
+    return {"message": "登录成功", "username": user.username,"access_token": token, "token_type": "bearer"}
+
+@router.get(f"/my-account")
+def read_me(user_id: int = Depends(get_current_user)): # 依赖函数
+    return {"user_id": user_id}
