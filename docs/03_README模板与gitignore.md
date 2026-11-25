@@ -1,83 +1,113 @@
 # README 模板与 .gitignore
 
-> 本文件包含两份可直接放入仓库根目录的内容：
-> ① `README.md`（仓库说明 + 目录结构 + 提交规范 + 16 周总览）
-> ② `.gitignore`（忽略规则）
-> 之后整理仓库时，把下面两段内容分别存成这两个文件名即可。
+> 本文件包含三份模板：① 仓库根 README ② 项目 README ③ .gitignore。
+> 使用时复制对应段落，替换掉尖括号占位内容即可。
 
 ---
 
-## ① README.md（仓库根目录）
+## ① 仓库根 README.md 模板
 
-````markdown
+```markdown
 # ywq_project — Python 实训仓库
 
-> 本仓库是学员 Python 实训（16 周技术岗就业冲刺）的学习轨迹仓库。当前阶段含学习计划、学习日志、作业代码，随进度逐步扩展项目、测试用例、求职材料。
+> 一句话说明：16 周技术岗就业冲刺的学习轨迹仓库。
 
-## 目录结构（分阶段演进）
+## 目录结构
 
-当前（第1—4周）只有三个目录：
+按周归档，每周一个目录；主线项目独立在根级 `项目/`。
 
-```
+```text
 ywq_project/
-├── 学习计划/     # 老师下发的计划文档（按周归档）
-├── 学习日志/     # 每天的文字复盘（按周归档）
-└── 作业代码/     # 每日练习 + 周项目 + 测试清单（第N周_主题）
+├── docs/          # 规范文档
+├── 第N周/          # 第N周学习计划_学生版.md + 学习日志/ + 作业代码/
+└── 项目/          # 主线项目，唯一位置
+    └── 用户管理系统/
 ```
 
-第 5 周做项目时新增 `项目/`、`测试用例/`；第 11 周求职时新增 `求职材料/`。
+> 详细命名规则见 docs/05_命名与目录规范.md。
 
 ## 16 周学习轨迹
 
-| 周次 | 主题 | 核心产出 |
-|---|---|---|
-| 第1周 | Python核心基础 | 命令行待办程序（SQLite版）+ 测试清单 |
-| 第2周 | OOP与SQL进阶 | 类改写待办程序 + assert测试 |
-| 第3周 | 装饰器与Git | 装饰器练习 + GitHub首次提交 |
-| 第4周 | 生成器与工程工具 | 生成器练习 + pytest脚本 |
-| 第5周 | FastAPI基础 | 待办API（内存版）+ Postman用例 |
-| 第6周 | 项目框架与用户模块 | 项目框架 + 用户模块 |
-| 第7周 | 数据库与数据层 | 项目接数据库 + CRUD |
-| 第8周 | 项目整合 | 完整项目 + README + 测试用例集 |
-| 第9周 | pytest进阶 | 自动化测试用例（≥20条） |
-| 第10周 | 并发编程 | 异步爬虫小例子 |
-| 第11周 | 项目部署 | 部署说明 + Linux命令笔记 |
-| 第12周 | 求职准备 | 简历 + 模拟面试 |
-| 第13—16周 | 求职冲刺 | 投递记录 + 面试复盘 |
+| 周次 | 主题 | 核心产出 | 状态 |
+|---|---|---|---|
+| 第1周 | <主题> | <产出> | ✅ / 🔄 / 计划中 |
 
 ## 提交规范
 
-格式：`类型: 第N周 内容简述`
-
-| 类型 | 含义 |
-|---|---|
-| `feat` | 新作业 / 新代码 / 项目功能 |
-| `log` | 学习日志 |
-| `plan` | 学习计划 |
-| `fix` | 修改订正 |
-| `docs` | 文档 |
-
-示例：`feat: 第1周 day1 变量与循环练习`
+格式：`类型: 第N周 内容简述`（feat / log / plan / fix / docs）
 
 ## 每日提交节奏
 
-每天学完当天提交：先 `git pull` → 放文件 → `git add` → `git commit -m "..."` → `git push`。
-详细步骤见《Git 提交作业操作指引（学生版）》。
+git pull → 放文件 → git add . → git commit -m "..." → git push
 
-## 学习日志模板
+## 文档索引
 
-```markdown
-# 日期 周几学习日志
-## 今天学了什么
-## 遇到的问题
-## 怎么解决的
-## 明天的计划
+| 文件 | 用途 |
+|---|---|
+| docs/01_新人入门指引.md | 环境安装 + 仓库使用 |
+| docs/05_命名与目录规范.md | 命名规则 |
 ```
-````
 
 ---
 
-## ② .gitignore（仓库根目录）
+## ② 项目 README.md 模板（放在 `项目/用户管理系统/`）
+
+> 注意事项：文件名必须是 **README.md**（全大写）。写成 REMADE.md / Readme.md 等，GitHub 不会在首页渲染。
+
+```markdown
+# 用户管理系统
+
+一个基于 FastAPI + MySQL 的用户管理 + 待办事项管理系统。
+
+## 技术栈
+
+- Python 3.10+ / FastAPI
+- Pydantic v2（数据校验）
+- APIRouter（路由分层）
+- SQLAlchemy + MySQL（数据持久化）
+- Postman / Apifox（接口测试）
+
+## 快速开始
+
+```bash
+git clone https://github.com/WangChuanRiverGhost/ywq_project.git
+cd ywq_project/项目/用户管理系统
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+uvicorn main:app --reload
+```
+
+浏览器打开 http://127.0.0.1:8000/docs
+
+## 项目结构
+
+```text
+用户管理系统/
+├── main.py          # 应用入口
+├── routers/         # 路由层
+├── schemas/         # Pydantic 模型层
+├── models/          # 数据库模型层
+├── database.py      # 数据库连接
+├── requirements.txt
+└── README.md
+```
+
+## 接口清单
+
+> 必须与实际路由完全一致。`APIRouter(prefix="/users")` 配 `@router.post("/register")`，实际路径是 `/users/register`，不是 `/users/users/register`。
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| POST | /users/register | 用户注册 |
+| POST | /users/login | 用户登录 |
+
+## 接口测试
+
+见 Postman Collection `项目/用户管理系统/postman/`。
+```
+
+---
+
+## ③ .gitignore（仓库根目录）
 
 ```gitignore
 # 虚拟环境（体积大，本地用即可，不提交）
