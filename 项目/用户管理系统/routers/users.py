@@ -44,7 +44,7 @@ router = APIRouter(prefix="/users", tags=["用户"])
 
 users_db = []
 
-@router.post("/users")
+@router.post("/register")
 def create_user(user: UserCreate):
     # 重名校验
     if any(u["username"] == user.username for u in users_db):
@@ -68,7 +68,7 @@ def create_user(user: UserCreate):
     # 把信息返回给前端
     return {"id": new_id, "username": user.username}
 
-@router.post("/users/login")
+@router.post("/login")
 def login_user(user: UserLogin):
 
     # 查找用户名

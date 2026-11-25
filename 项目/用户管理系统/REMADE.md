@@ -7,7 +7,8 @@
 - Python 3.14 + FastAPI
 - Pydantic v2（数据校验）
 - APIRouter（路由分层）
-- 内存存储（第 7 周将切换为 MySQL）
+- MySQL（数据库）
+- SQLAlchemy（数据模型）
 - Postman / Apifox（接口测试）
 
 ## 快速开始
@@ -51,14 +52,15 @@ uvicorn main:app --reload
 
 ### 用户模块
 - `POST /users/register` — 用户注册
-- `POST /users/login` — 用户登录（明天完成）
+- `POST /users/login` — 用户登录
 
 ### 待办模块
-- `POST /todos/` — 新增待办
-- `GET /todos/` — 查所有待办
-- `GET /todos/{todo_id}` — 查某一条待办
-- `PUT /todos/{todo_id}` — 修改某一条待办
-- `DELETE /todos/{todo_id}` — 删除某一条待办
+- `POST /todos/create-todo` — 新增待办
+- `GET /todos/check-todo` — 查所有待办
+- `GET /todos/check-todo/not-finished` — 查未完成待办
+- `GET /todos/check-todo/finished` — 查未完成待办
+- `PUT /todos/edit-todo/{todo_id}` — 修改某一条待办状态
+- `DELETE /todos/delete-todo/{todo_id}` — 删除某一条待办
 
 ## 接口测试
 项目启动后，可通过 Swagger UI、Postman 或 Apifox 测试接口。推荐先用 /docs 确认接口定义，再用 Postman / Apifox 做完整流程测试。  
